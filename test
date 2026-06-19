@@ -1,0 +1,15 @@
+pipeline {
+    agent { label 'docker-agent' }
+
+    stages {
+        stage('SSH Test') {
+            steps {
+                sshagent(['dev-server-key']) {
+                    sh '''
+                    ssh -o StrictHostKeyChecking=no ubuntu@DEV_SERVER_IP hostname
+                    '''
+                }
+            }
+        }
+    }
+}
